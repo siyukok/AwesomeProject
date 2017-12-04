@@ -1,6 +1,22 @@
 import React, {Component} from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Text,View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
+import RequestUtil from "../utils/RequestUtil";
+import * as api from '../constants/API'
+import Item from "../pages/CategoryPage/Item";
+
+var list;
+
+const data = RequestUtil.request(api.COMIC_API, 'get')
+    .then((responseData) => {
+        list = responseData.showapi_res_body.result;
+        console.log(list)
+    }, (responseData) => {
+
+    }).catch((error) => {
+        console.log('logger' + error)
+    })
+
 
 class CategoryContainer extends Component {
     static navigationOptions = {
@@ -10,12 +26,25 @@ class CategoryContainer extends Component {
         )
     };
 
+    // 构造
+    constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {};
+    }
+
+    renderItemContent = (result) => {
+        return <Item result={result}/>
+    }
+
     render() {
-        return(
+        return (
             <View>
-                <Text>
-                    分类
-                </Text>
+                <FlatList
+                    data={list}
+                    keyExtractor={(item, index) => 'key-${index}'}
+                    renderItem={(item) => this.renderItemContent(item)}
+                />
             </View>
         );
     }
