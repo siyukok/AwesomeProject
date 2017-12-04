@@ -15,40 +15,54 @@
  * limitations under the License.
  *
  */
+import getUrl from "./UrlUtil";
 
-import getUrl from './UrlUtil';
 
 const request = (url, method, body) => {
-  let isOk;
-  return new Promise((resolve, reject) => {
-    fetch(getUrl(url), {
-      method,
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body
-    })
-      .then((response) => {
-        if (response.ok) {
-          isOk = true;
-        } else {
-          isOk = false;
-        }
-        return response.json();
-      })
-      .then((responseData) => {
-        if (isOk) {
-          resolve(responseData);
-        } else {
-          reject(responseData);
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+    let isOk;
+    return new Promise((resolve, reject) => {
+        // const form = new FormData();
+        // form.append('showapi_appid', '50982');
+        // form.append('showapi_sign', 'cf6546bc82104f42a8c7c2792192c937');
+        fetch(getUrl(url), {
+            method: method,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: body
+            //     JSON.stringify({
+            //     showapi_appid: '50982',
+            //     showapi_sign: 'cf6546bc82104f42a8c7c2792192c937'
+            // })
+        })
+            .then((response) => {
+                if (response.ok) {
+                    isOk = true;
+                } else {
+                    isOk = false;
+                }
+                // console.log('-----------------------------------------')
+                // console.log(response)
+                return response.json();
+            })
+            .then((responseData) => {
+                if (isOk) {
+                    resolve(responseData);
+                } else {
+                    reject(responseData);
+                }
+                // console.log(responseData.showapi_res_body.result)
+            })
+            .catch((error) => {
+                reject(error);
+                console.log(error)
+            });
+        // console.log('-----------------------------------------')
+    });
 };
 
 export default {
-  request
+    request
 };

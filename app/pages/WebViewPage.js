@@ -38,8 +38,13 @@ class WebViewPage extends Component {
                     scalesPageToFit
                     decelerationRate="normal"
                     onShouldStartLoadWithRequest={() => {
-                        const shouldStartLoad = true;
-                        return shouldStartLoad;
+                        return false;
+                    }}
+                    onNavigationStateChange={(event) => {
+                        console.log('拦截到了'+event.title+':'+event.url)
+                        if (event.url.contains('goods')){
+                            console.log('商品')
+                        }
                     }}
                     renderLoading={this.renderLoading}
                 />

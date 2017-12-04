@@ -15,11 +15,23 @@
  * limitations under the License.
  *
  */
-const getUrl = (url) => {
-  if (url.indexOf('?') === -1) {
-    return `${url}?showapi_appid=50982&showapi_sign=cf6546bc82104f42a8c7c2792192c937`;
-  }
-  return `${url}&showapi_appid=50982&showapi_sign=cf6546bc82104f42a8c7c2792192c937`;
-};
+import * as types from '../constants/ActionTypes';
 
-export default getUrl;
+export function requestTypeList() {
+  return {
+    type: types.REQUEST_TYPE_LIST
+  };
+}
+
+export function fetchTypeList() {
+  return {
+    type: types.FETCH_TYPE_LIST
+  };
+}
+
+export function receiveTypeList(typeList) {
+  return {
+    type: types.RECEIVE_TYPE_LIST,
+    typeList
+  };
+}

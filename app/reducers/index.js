@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import demoReducer from './DemoReducer'
+import {combineReducers} from 'redux';
+import category from './category'
 
 const rootReducer = combineReducers({
-    demoReducer
+    category
 })
 
 export default rootReducer;

@@ -15,11 +15,10 @@
  * limitations under the License.
  *
  */
-const getUrl = (url) => {
-  if (url.indexOf('?') === -1) {
-    return `${url}?showapi_appid=50982&showapi_sign=cf6546bc82104f42a8c7c2792192c937`;
-  }
-  return `${url}&showapi_appid=50982&showapi_sign=cf6546bc82104f42a8c7c2792192c937`;
-};
+import { all, fork } from 'redux-saga/effects';
 
-export default getUrl;
+import { watchRequestTypeList } from './category';
+
+export default function* rootSaga() {
+  yield all([fork(watchRequestTypeList)]);
+}
